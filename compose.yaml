@@ -1,0 +1,22 @@
+services:
+  pi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pi:local
+    init: true
+    stdin_open: true
+    tty: true
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      PI_GROUPS: ${PI_GROUPS}
+    volumes:
+      - type: bind
+        source: ./data
+        target: /home/node/.pi/agent
+      - type: bind
+        source: ${PI_WORKSPACE:-./workspace}
+        target: /workspace
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
