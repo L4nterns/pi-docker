@@ -23,6 +23,10 @@ RUN npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 COPY docker-entrypoint.sh /usr/local/bin/pi-entrypoint
 RUN chmod 0755 /usr/local/bin/pi-entrypoint
 
+RUN printf '%s\n' \
+    "PS1='\\[\\e[2;90m\\]────────────────────────────────\\[\\e[0m\\]\\n\\[\\e[1;36m\\]\\u@\\h:\\w\\$ \\[\\e[0m\\]'" \
+    >> /home/node/.bashrc
+
 USER root
 WORKDIR /workspace
 ENTRYPOINT ["/usr/local/bin/pi-entrypoint"]
